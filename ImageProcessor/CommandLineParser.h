@@ -18,6 +18,11 @@ struct ProgramOptions {
     std::string inputPath;   ///< --input  / -i
     std::string outputPath;  ///< --output / -o
     std::string filterName;  ///< --filter / -f
+
+    // 파이프라인 추가
+	std::string pipeline;     ///< --pipeline / -p
+	int threshold = -1;       ///< --threshold / -t (-1은 입력 없음)
+	
 };
 
 class CommandLineParser {

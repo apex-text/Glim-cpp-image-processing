@@ -1,12 +1,12 @@
 #include "Histogram.h"
 #include <cstdint> // uint8_t 변수사용
 #include <iostream> // std::cout 사용
-#include <iomanip> // cout 줄맞춤시 사용
+#include <iomanip> // cout setw 줄맞춤시 사용
 namespace ip {
-    void HistogramPrint(const std::string& label, int count, int totalPixels) {
-        int percent = (count * 100) / totalPixels;
+    void HistogramPrint(const std::string& label, int count, int totalPixels) { // 히스토그램 print 함수
+        double percent = (count * 100.0) / totalPixels;
         std::cout << std::left << std::setw(25) << label << ": ";
-        std::cout << std::right << std::setw(8) << count << " (" << std::setw(3) << percent << "%) |";
+        std::cout << std::right << std::setw(8) << count << " (" << std::setw(5) << percent << "%) |";
         for (int p = 0; p < (percent/2); ++p) {
             std::cout << "*";
         }
@@ -67,9 +67,9 @@ namespace ip {
         HistogramPrint("[1~25] Black", black, totalPixels);
         HistogramPrint("[26~76] Shadows", shadows, totalPixels);
         HistogramPrint("[77~178] Exposure", exposure, totalPixels);
-        HistogramPrint("[179~229]Highlights", highlights, totalPixels);
+        HistogramPrint("[179~229] Highlights", highlights, totalPixels);
         HistogramPrint("[230~254] Whites", whites, totalPixels);
-        HistogramPrint("[255] ClipWhites", clipWhites, totalPixels);
+        HistogramPrint("[255] White Clipping", clipWhites, totalPixels);
         std::cout << "======================================================\n\n";
 	}
 }

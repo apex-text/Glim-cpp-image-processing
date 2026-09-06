@@ -4,7 +4,7 @@
 
 namespace ip {
 
-    void BrightnessFilter::process(ImageBuffer& image, int bright) {
+    void BrightnessFilter::process(ImageBuffer& image) {
         std::uint8_t* data = image.data();
         int width = image.width();
         int height = image.height();
@@ -19,9 +19,9 @@ namespace ip {
 
 
             // 밝기 조절
-            int newB = data[index + 0]+ bright; // B
-            int newG = data[index + 1]+ bright; // G
-            int newR = data[index + 2]+ bright; // R
+            int newB = data[index + 0]+ m_brightness; // B
+            int newG = data[index + 1]+ m_brightness; // G
+            int newR = data[index + 2]+ m_brightness; // R
 
             // 조절 후 값으로 교체
             data[index + 0] = static_cast<std::uint8_t>(std::clamp(newB, 0, 255)); // B

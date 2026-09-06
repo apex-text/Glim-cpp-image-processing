@@ -2,7 +2,7 @@
 #include <cstdint>
 
 namespace ip {
-	void ThresholdFilter::process(ImageBuffer& image, uint8_t threshold) {
+	void ThresholdFilter::process(ImageBuffer& image) {
 		std::uint8_t* data = image.data();
 		int width = image.width();
 		int height = image.height();
@@ -14,7 +14,7 @@ namespace ip {
 			std::uint8_t y = (data[index] * 0.299 + data[index + 1] * 0.587 + data[index + 2] * 0.114);
 			
 			// 픽셀 이진화
-			if (y > threshold) {
+			if (y > m_threshold) {
 				data[index + 0] = 255; // B
 				data[index + 1] = 255; // G
 				data[index + 2] = 255; // R

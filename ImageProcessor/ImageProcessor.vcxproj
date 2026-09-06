@@ -86,24 +86,31 @@
     <ClCompile Include="Brightness.cpp" />
     <ClCompile Include="Contrast.cpp" />
     <ClCompile Include="Convolution.cpp" />
+    <ClCompile Include="CropFilter.cpp" />
     <ClCompile Include="GrayscaleFilter.cpp" />
     <ClCompile Include="Histogram.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ImageBuffer.cpp" />
     <ClCompile Include="BmpParser.cpp" />
     <ClCompile Include="CommandLineParser.cpp" />
+    <ClCompile Include="Mirror.cpp" />
+    <ClCompile Include="ResizeFilter.cpp" />
     <ClCompile Include="ThresholdFilter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brightness.h" />
     <ClInclude Include="Contrast.h" />
     <ClInclude Include="Convolution.h" />
+    <ClInclude Include="CropFilter.h" />
     <ClInclude Include="Exceptions.h" />
+    <ClInclude Include="FilterBase.h" />
     <ClInclude Include="GrayscaleFilter.h" />
     <ClInclude Include="Histogram.h" />
     <ClInclude Include="ImageBuffer.h" />
     <ClInclude Include="BmpParser.h" />
     <ClInclude Include="CommandLineParser.h" />
+    <ClInclude Include="Mirror.h" />
+    <ClInclude Include="ResizeFilter.h" />
     <ClInclude Include="ThresholdFilter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

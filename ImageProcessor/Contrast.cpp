@@ -1,10 +1,10 @@
 #include "Contrast.h"
-#include <cstdint>
-#include <algorithm>
+#include <cstdint> // std::uint8_t 타입을 사용하기 위해 필요
+#include <algorithm> // clamp 함수를 사용하기 위해 필요
 
 namespace ip {
 
-    void ContrastFilter::process(ImageBuffer& image, float contrast) {
+    void ContrastFilter::process(ImageBuffer& image) {
         std::uint8_t* data = image.data();
         int width = image.width();
         int height = image.height();
@@ -16,14 +16,14 @@ namespace ip {
             int index = i * ImageBuffer::CHANNELS;
 
             // 대비 조절
-            int newB = (data[i + 0] - 128) * contrast + 128; // B
-            int newG = (data[index + 1] - 128) * contrast + 128; // G
-            int newR = (data[index + 2] - 128) * contrast + 128; // R
+            double newB = (data[index + 0] - 128) * 1.0 * m_contrast + 128; // B
+            double newG = (data[index + 1] - 128) * 1.0 * m_contrast + 128; // G
+            double newR = (data[index + 2] - 128) * 1.0 * m_contrast + 128; // R
 
             // 조절 후 값으로 교체
-            data[i] = static_cast<std::uint8_t>(std::clamp(newB, 0, 255)); // B
-            data[index + 1] = static_cast<std::uint8_t>(std::clamp(newG, 0, 255)); // G
-            data[index + 2] = static_cast<std::uint8_t>(std::clamp(newR, 0, 255)); // R
+            data[index + 0] = static_cast<std::uint8_t>(std::clamp(newB, 0.0, 255.0)); // B
+            data[index + 1] = static_cast<std::uint8_t>(std::clamp(newG, 0.0, 255.0)); // G
+            data[index + 2] = static_cast<std::uint8_t>(std::clamp(newR, 0.0, 255.0)); // R
         }
     }
 }

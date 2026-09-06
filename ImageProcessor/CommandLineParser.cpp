@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include "Contrast.h"
 
 namespace ip {
 
@@ -32,8 +33,14 @@ ProgramOptions CommandLineParser::parse(int argc, char* argv[]) {
         else if (arg == "--output" || arg == "-o") {
             options.outputPath = nextArg(argc, argv, i, arg);
         }
+		else if (arg == "--pipeline" || arg == "-p") {
+			options.pipeline = nextArg(argc, argv, i, arg);
+		}
         else if (arg == "--filter" || arg == "-f") {
             options.filterName = nextArg(argc, argv, i, arg);
+        }
+        else if (arg == "--threshold" || arg == "-t") {
+            options.threshold = std::stoi(nextArg(argc, argv, i, arg));
         }
         else if (arg == "--help" || arg == "-h") {
             printUsage(argv[0]);
@@ -51,8 +58,8 @@ ProgramOptions CommandLineParser::parse(int argc, char* argv[]) {
     if (options.outputPath.empty()) {
         throw ArgumentError("--output is required");
     }
-    if (options.filterName.empty()) {
-        throw ArgumentError("--filter is required");
+    if (options.pipeline.empty() && options.filterName.empty()) {
+		throw ArgumentError("--pipeline or --filter are required"); // 둘 다 비어있으면 안 됨
     }
 
     return options;
@@ -61,11 +68,12 @@ ProgramOptions CommandLineParser::parse(int argc, char* argv[]) {
 void CommandLineParser::printUsage(const std::string& exeName) {
     std::cout
         << "Usage:\n"
-        << "  " << exeName << " --input <path> --output <path> --filter <name>\n\n"
+        << "  " << exeName << " --input <path> --output <path> --filter <name> --pipeline <pipeline>\n\n"
         << "Options:\n"
         << "  -i, --input   <path>   Input BMP file (24-bit, uncompressed)\n"
         << "  -o, --output  <path>   Output BMP file\n"
         << "  -f, --filter  <name>   Filter to apply (e.g. grayscale, threshold:128)\n"
+        << "  -p, --pipeline <pipeline>  Pipeline of filters to apply\n"
         << "  -h, --help             Show this message\n\n"
         << "Examples:\n"
         << "  " << exeName << " -i input.bmp -o result.bmp -f grayscale\n"
