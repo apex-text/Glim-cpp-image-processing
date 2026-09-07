@@ -32,13 +32,13 @@
 #include <memory>
 #include <sstream>
 #include <string>
-
+#include <chrono>
 
 int main(int argc, char* argv[]) {
     try {
         // ── CLI 인자 파싱 (제공된 코드) ─────────────────────────
         const ip::ProgramOptions options = ip::CommandLineParser::parse(argc, argv);
-
+        
         // ── BMP 로드 (제공된 코드) ──────────────────────────────
         ip::ImageBuffer image = ip::BmpParser::loadFromFile(options.inputPath);
         std::cout << "Loaded: " << image.width() << " x " << image.height() << "\n";
@@ -67,15 +67,15 @@ int main(int argc, char* argv[]) {
         //     - 멀티쓰레드 처리
         //     - 로그 파일 출력 (CLI 옵션 확장 필요)
         // ───────────────────────────────────────────────────────
-
+        
         // ↓ 여기에 필터 적용 코드를 작성하세요.
-
+        
 		std::vector<std::unique_ptr<ip::FilterBase>> pipeline;
         std::string pipelineStr = options.pipeline;
 		std::stringstream ss(pipelineStr);
         std::string command;
-
-        if (!options.pipeline.empty()) {
+		auto startTime = std::chrono::high_resolution_clock::now(); // 시작 시간 기록
+        if (!options.pipeline.empty()) { // -------------------필터 파이프라인 처리----------------
             while (std::getline(ss, command, ',')) {
                 if (command == "grayscale") {
                     pipeline.push_back(std::make_unique<ip::GrayscaleFilter>());
@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
-
+        // ---------- 단일 필터 적용 ------------
         else {
             if (options.filterName == "grayscale") { //-----------------흑백 처리-------
                 ip::GrayscaleFilter filter;
@@ -198,8 +198,14 @@ int main(int argc, char* argv[]) {
             else {
                 throw ip::FilterError("Unknown filter: " + options.filterName);
             }
+            if (options.filterName != "threshold" && options.threshold != -1) {
+                ip::ThresholdFilter addThreshFilter(options.threshold);
+                addThreshFilter.process(image);
+            }
 
         }
+		auto endTime = std::chrono::high_resolution_clock::now(); // 종료 시간 기록
+		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
 
         // ── BMP 저장 (제공된 코드) ──────────────────────────────
