@@ -1,4 +1,4 @@
-# ImageProcessor 과제 제출
+# C++ 내장 라이브러리 ImageProcessor
 
 ## 구현 항목
 
