@@ -13,14 +13,12 @@
 - 리사이즈(Resize) 필터 (`resize:<percent>`)
 - 반전(Mirror) 필터 (`mirror:h` 또는 `mirror:v`)
 
-### 심화 항목
  - 필터 파이프라인 체인 다중 필터 적용 (`--pipeline`)
  - 추상 클래스 기반 설계 (`FilterBase`)
 
 
 ## 실행 명령어 (예시)
 
-<!-- 예시 입니다. 기존 예시를 지우고 구현한 항목에 맞게 명령어를 작성해주세요. -->
 
 ```powershell
 # Grayscale 변환
